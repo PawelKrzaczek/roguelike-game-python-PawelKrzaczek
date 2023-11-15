@@ -1,8 +1,8 @@
 def display_board(board):
-    '''
-    Displays complete game board on the screen
-
-    Returns:
-    Nothing
-    '''
-    pass
+    for row in board:
+        for elem in row:
+            if type(elem) == dict:
+                print(elem['type'], end="")
+            else:
+                print(elem, end="")
+        print()
