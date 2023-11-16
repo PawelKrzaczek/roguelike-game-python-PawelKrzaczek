@@ -2,6 +2,8 @@ from random import randint, choice
 
 FOOD = 'F'
 KEY = 'K'
+ARMOR = 'A'
+WEAPONS = 'W'
 
 
 def create_board(width, height):
@@ -52,10 +54,17 @@ def move_player(board, player, direction):
     if direction == 'D' and board[x][y+1] != '#':
         new_y += 1
 
-    if board[new_x][new_y] == 'F':
-        player["health"] += 10
-    elif board[new_x][new_y] == 'K':
-        player["inventory"].append(board[new_x][new_y])
-        print(player["inventory"])
+    if type(board[new_x][new_y]) == dict:
+        if board[new_x][new_y]['type'] == 'F':
+            player["health"] += 10
+        elif board[new_x][new_y]['type'] == 'W':
+            player["attack"] += 1
+        elif board[new_x][new_y]['type'] == 'A':
+            player["armor"] += 5
+        elif board[new_x][new_y]['type'] == 'K':
+            player["inventory"].append(board[new_x][new_y])
+            print(player["inventory"])
 
-    return new_x, new_y
+    player["position"][0] = new_x
+    player["position"][1] = new_y
+    return player

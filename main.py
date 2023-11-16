@@ -20,6 +20,8 @@ def create_player():
     race = input("Input race like(elf, dwarf)")
     player["race"] = race
     health = 50;
+    player["armor"] = 0
+    player["attack"] = 5
     player["health"] = health
     player["inventory"] = []
     return player
@@ -35,6 +37,7 @@ def main():
     while is_running:
         engine.put_player_on_board(board, player)
         ui.display_board(board)
+        ui.display_player(player)
 
         key = util.key_pressed()
         if key == 'i':
@@ -46,9 +49,7 @@ def main():
         if key == 'q':
             is_running = False
         else:
-            x, y = engine.move_player(board, player, key.upper())
-            player["position"] = [x, y]
-            time.sleep(20)
+            player = engine.move_player(board, player, key.upper())
         util.clear_screen()
 
 
