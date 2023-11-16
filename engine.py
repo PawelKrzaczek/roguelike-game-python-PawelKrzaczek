@@ -27,10 +27,10 @@ def create_board(width, height):
 
 
 def items(board):
-    for _ in range(randint(3, 5)):
+    for _ in range(randint(8, 10)):
         x, y = randint(1, len(board) - 2), randint(1, len(board[0]) - 2)
-        type = choice([FOOD, KEY])
-        item = {'type': type, 'position': [x, y]}
+        types = choice([FOOD, KEY, ARMOR, WEAPONS])
+        item = {'type': types, 'position': [x, y]}
         if board[x][y] == ' ':
             board[x][y] = item
 
@@ -49,9 +49,9 @@ def move_player(board, player, direction):
         new_x -= 1
     elif direction == 'A' and board[x][y-1] != '#':
         new_y -= 1
-    if direction == 'S' and board[x+1][y] != '#':
+    elif direction == 'S' and board[x+1][y] != '#':
         new_x += 1
-    if direction == 'D' and board[x][y+1] != '#':
+    elif direction == 'D' and board[x][y+1] != '#':
         new_y += 1
 
     if type(board[new_x][new_y]) == dict:

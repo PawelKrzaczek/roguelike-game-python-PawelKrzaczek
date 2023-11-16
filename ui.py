@@ -6,3 +6,8 @@ def display_board(board):
             else:
                 print(elem, end="")
         print()
+
+
+def display_player(player):
+    print("Name:", player["name"], "Attack:", player["attack"], "Armor:", player["armor"], "Health:", player["health"])
+    print(player)

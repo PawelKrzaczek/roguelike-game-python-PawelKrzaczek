@@ -1,3 +1,4 @@
+
 import util
 import engine
 import ui
@@ -32,7 +33,7 @@ def main():
     board = engine.create_board(BOARD_WIDTH, BOARD_HEIGHT)
     engine.items(board)
 
-    #util.clear_screen()
+    # util.clear_screen()
     is_running = True
     while is_running:
         engine.put_player_on_board(board, player)
@@ -42,9 +43,7 @@ def main():
         key = util.key_pressed()
         if key == 'i':
             util.clear_screen()
-            lista = player["inventory"]
-            for elem in lista:
-                print(elem["type"])
+            print( player["inventory"] )
             time.sleep(3)
         if key == 'q':
             is_running = False
