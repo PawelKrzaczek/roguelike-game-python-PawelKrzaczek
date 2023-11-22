@@ -3,6 +3,7 @@ import util
 import engine
 import ui
 import time
+from random import randint
 
 PLAYER_ICON = '@'
 PLAYER_START_X = 3
@@ -44,6 +45,10 @@ def create_character(name, type):
 
 def main():
     player = create_player()
+    list_enemies = list()
+    list_enemies.append(create_character("ork", "ork"))
+    list_enemies.append(create_character("smok", "smok"))
+
     board = engine.create_board(BOARD_WIDTH, BOARD_HEIGHT)
     engine.items(board)
 
@@ -51,8 +56,11 @@ def main():
     is_running = True
     while is_running:
         engine.put_player_on_board(board, player)
+        engine.put_enemies_on_board(board, list_enemies)
         ui.display_board(board)
         ui.display_player(player)
+        for enemy in list_enemies:
+            ui.display_player(enemy)
 
         key = util.key_pressed()
         if key == 'i':
@@ -62,7 +70,12 @@ def main():
         if key == 'q':
             is_running = False
         else:
-            player = engine.move_player(board, player, key.upper())
+            player, enemy_sign = engine.move_player(board, player, key.upper())
+            for i in range(len(list_enemies)):
+            #    if list_enemies[i]['sign'] != enemy_sign:
+             #       list_enemies[i] = engine.move_character(board, list_enemies[i])
+                if list_enemies[i]["health"] <= 0:
+                    list_enemies.pop(i)
         util.clear_screen()
 
 
