@@ -1,6 +1,6 @@
 from random import randint, choice
 
-FOOD = 'F'
+FOOD = '😁'
 KEY = 'K'
 ARMOR = 'A'
 WEAPONS = 'W'

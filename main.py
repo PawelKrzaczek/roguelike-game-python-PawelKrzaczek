@@ -28,6 +28,20 @@ def create_player():
     return player
 
 
+def create_character(name, type):
+    character = dict()
+    character["type"] = "P"
+    character["position"] = [randint(1, BOARD_HEIGHT-1), randint(1, BOARD_WIDTH-1)]
+    character["name"] = name
+    character["sign"] = type
+    health = 20
+    character["armor"] = randint(0, 3)
+    character["attack"] = randint(10, 15)
+    character["health"] = health
+    character["inventory"] = []
+    return character
+
+
 def main():
     player = create_player()
     board = engine.create_board(BOARD_WIDTH, BOARD_HEIGHT)
