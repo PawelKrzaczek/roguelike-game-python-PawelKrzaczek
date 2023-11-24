@@ -43,39 +43,67 @@ def create_character(name, type):
     return character
 
 
+def create_boss():
+    character = dict()
+    character["type"] = "B"
+    character["position"] = [11, 16]
+    character["name"] = "BOSS"
+    character["sign"] = "BOSS"
+    health = 50
+    character["armor"] = randint(10, 30)
+    character["attack"] = randint(20, 25)
+    character["health"] = health
+    character["inventory"] = []
+    return [character]
+
+
 def main():
     player = create_player()
     list_enemies = list()
     list_enemies.append(create_character("ork", "ork"))
     list_enemies.append(create_character("smok", "smok"))
+    boss = create_boss()
 
     board = engine.create_board(BOARD_WIDTH, BOARD_HEIGHT)
     engine.items(board)
+    engine.put_enemies_on_board(board, list_enemies)
+
+    board_boss = engine.create_board(BOARD_WIDTH, BOARD_HEIGHT)
+    engine.put_enemies_on_board(board_boss, boss)
 
     # util.clear_screen()
     is_running = True
     while is_running:
         engine.put_player_on_board(board, player)
-        engine.put_enemies_on_board(board, list_enemies)
         ui.display_board(board)
         ui.display_player(player)
         for enemy in list_enemies:
+            ui.display_player(enemy)
+        for enemy in boss:
             ui.display_player(enemy)
 
         key = util.key_pressed()
         if key == 'i':
             util.clear_screen()
-            print( player["inventory"] )
+            print(player["inventory"])
             time.sleep(3)
         if key == 'q':
             is_running = False
         else:
-            player, enemy_sign = engine.move_player(board, player, key.upper())
+            player, boss_fight = engine.move_player(board, player, key.upper())
+            if boss_fight is True:
+                board = board_boss
             for i in range(len(list_enemies)):
             #    if list_enemies[i]['sign'] != enemy_sign:
              #       list_enemies[i] = engine.move_character(board, list_enemies[i])
                 if list_enemies[i]["health"] <= 0:
                     list_enemies.pop(i)
+            for i in range(len(boss)):
+                if boss[i]["health"] <= 0:
+                    util.clear_screen()
+                    print("WIN")
+                    time.sleep(5)
+                    return
         util.clear_screen()
 
 

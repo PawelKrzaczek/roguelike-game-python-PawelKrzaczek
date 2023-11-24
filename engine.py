@@ -76,6 +76,12 @@ def move_player(board, player, direction):
     elif direction == 'D' and board[x][y + 1] != '#':
         new_y += 1
 
+    if board[new_x][new_y] == 'G':
+        if empty_board(board) == 0:
+            player["position"][0] = new_x
+            player["position"][1] = new_y
+            return player, True
+
     if type(board[new_x][new_y]) == dict:
         if board[new_x][new_y]['type'] == '😁':
             player["health"] += 10
@@ -95,7 +101,16 @@ def move_player(board, player, direction):
 
     player["position"][0] = new_x
     player["position"][1] = new_y
-    return player, enemy_sign
+    return player, False
+
+
+def empty_board(board):
+    count = 0
+    for row in board:
+        for elem in row:
+            if elem != '#' and elem != 'G' and elem != ' ':
+                count += 1
+    return count
 
 
 def move_character(board, enemy):
